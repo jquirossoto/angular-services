@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http'
 
 import { AddBookComponent } from './add-book/add-book.component';
 import { AddReaderComponent } from './add-reader/add-reader.component';
@@ -13,6 +14,7 @@ import { PlainLoggerService } from './core/plain-logger.service';
 import { LoggerService } from './core/logger.service';
 import { DataService } from './core/data.service';
 import { dataServiceFactory } from './core/data.service.factory';
+import { ErrorHandlerService } from './core/error-handler.service';
 
 @NgModule({
   declarations: [
@@ -21,12 +23,13 @@ import { dataServiceFactory } from './core/data.service.factory';
     AddBookComponent,
     EditReaderComponent,
     EditBookComponent,
-    AddReaderComponent
+    AddReaderComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [
     // PlainLoggerService,
@@ -35,7 +38,8 @@ import { dataServiceFactory } from './core/data.service.factory';
     //   log: (message: string) => console.log(`MESSAGE: ${message}`),
     //   error: (message: string) => console.error(`PROBLEM: ${message}`)
     // } },
-    // {provide: DataService, useFactory: dataServiceFactory, deps: [LoggerService]}
+    // {provide: DataService, useFactory: dataServiceFactory, deps: [LoggerService]},
+    { provide: ErrorHandler, useClass: ErrorHandlerService }
   ],
   bootstrap: [AppComponent]
 })
